@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:java-project-template.helloWorld"
+    "onCommand:java-project-template.createProject"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "java-project-template.helloWorld",
-        "title": "Hello World"
+        "command": "java-project-template.createProject",
+        "title": "Create Java Project"
       }
     ]
   },
