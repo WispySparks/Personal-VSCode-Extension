@@ -1,11 +1,13 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import { Uri } from 'vscode';
+import * as path from 'path';
 
-// this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	
+	let templatePath: string = path.join(context.extensionPath, 'templates', 'default');
+	let projectPath: Uri["fsPath"];
+	let projectName: string;
 	const dialogOptions: vscode.OpenDialogOptions = {
 		canSelectMany: false,
 		openLabel: 'Select Project Location',
@@ -26,21 +28,19 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let path: Uri["fsPath"];
-	let name: string;
 	let disposable = vscode.commands.registerCommand('java-project-template.createProject', () => {
-		vscode.window.showInformationMessage('Command Run');
 		vscode.window.showOpenDialog(dialogOptions).then(fileUri => {
 			if (fileUri != null) {
-				vscode.window.showInformationMessage(fileUri[0].fsPath);
-				path = fileUri[0].fsPath;
+				projectPath = fileUri[0].fsPath;
 				vscode.window.showInputBox(inputOptions).then(input => {
 					if (input != null) {
-						vscode.window.showInformationMessage(input);
-						name = input;
-						if (!fs.existsSync(path + "\\" + name)) {
-							fs.mkdirSync(path + "\\" + name);
-							vscode.commands.executeCommand('vscode.openFolder', Uri.file(path + "\\" + name))
+						projectName = input;
+						let projectBase: string = path.join(projectPath, projectName);
+						if (!fs.pathExistsSync(projectBase)) {
+							fs.ensureDirSync(projectBase);
+							fs.copySync(templatePath, projectBase);
+							fs.ensureDirSync(path.join(projectBase, "src", projectName))
+							vscode.commands.executeCommand('vscode.openFolder', Uri.file(projectBase))
 						}
 						else {
 							vscode.window.showErrorMessage("Already a Directory with that Name.");
