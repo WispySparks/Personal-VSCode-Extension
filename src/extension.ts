@@ -39,8 +39,10 @@ export function activate(context: vscode.ExtensionContext) {
 						if (!fs.pathExistsSync(projectBase)) {
 							fs.ensureDirSync(projectBase);
 							fs.copySync(templatePath, projectBase);
-							fs.ensureDirSync(path.join(projectBase, "src", projectName))
-							vscode.commands.executeCommand('vscode.openFolder', Uri.file(projectBase))
+							fs.ensureDirSync(path.join(projectBase, 'src', projectName));
+							fs.copyFileSync(path.join(context.extensionPath, 'templates', 'Main.java'), path.join(projectBase, 'src', projectName, 'Main.java'));
+							const openNewWindow: boolean = vscode.workspace.workspaceFolders != undefined;
+							vscode.commands.executeCommand('vscode.openFolder', Uri.file(projectBase), openNewWindow);
 						}
 						else {
 							vscode.window.showErrorMessage("Already a Directory with that Name.");
