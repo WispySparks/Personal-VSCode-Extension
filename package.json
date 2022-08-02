@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "java-project-template.createProject",
-        "title": "Create Java Project"
+        "title": "Wispy: Create Java Project"
       }
     ]
   },
