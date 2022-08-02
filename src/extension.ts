@@ -41,6 +41,8 @@ export function activate(context: vscode.ExtensionContext) {
 							fs.copySync(templatePath, projectBase);
 							fs.ensureDirSync(path.join(projectBase, 'src', projectName));
 							fs.copyFileSync(path.join(context.extensionPath, 'templates', 'Main.java'), path.join(projectBase, 'src', projectName, 'Main.java'));
+							let file = fs.readFileSync(path.join(projectBase, 'src', projectName, 'Main.java'));
+							fs.writeFileSync(path.join(projectBase, 'src', projectName, 'Main.java'), ("package " + projectName + ";\n" + file.toString()));
 							const openNewWindow: boolean = vscode.workspace.workspaceFolders != undefined;
 							vscode.commands.executeCommand('vscode.openFolder', Uri.file(projectBase), openNewWindow);
 						}
