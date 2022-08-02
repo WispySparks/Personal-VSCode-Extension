@@ -40,6 +40,10 @@ export function activate(context: vscode.ExtensionContext) {
 				projectName = input;
 				let projectBase: string = path.join(projectPath, projectName);
 				fs.ensureDirSync(projectBase);
+				fs.ensureDirSync(path.join(projectBase, 'bin'));
+				fs.ensureDirSync(path.join(projectBase, 'lib'));
+				fs.ensureDirSync(path.join(projectBase, 'res'));
+				fs.ensureDirSync(path.join(projectBase, 'src'));
 				fs.copySync(templatePath, projectBase);
 				fs.ensureDirSync(path.join(projectBase, 'src', projectName));
 				fs.copyFileSync(path.join(context.extensionPath, 'templates', 'Main.java'), path.join(projectBase, 'src', projectName, 'Main.java'));
