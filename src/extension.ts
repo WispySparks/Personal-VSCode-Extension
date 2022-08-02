@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 				return "";
 			}
 		},
-	}
+	};
 	let disposable = vscode.commands.registerCommand('java-project-template.createProject', () => {
 		vscode.window.showOpenDialog(dialogOptions).then(fileUri => {
 			if (fileUri == undefined) return;
