@@ -2,7 +2,7 @@
   "name": "java-project-template",
   "displayName": "Java Project Template",
   "description": "",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/WispySparks/Personal-VSCode-Extension"

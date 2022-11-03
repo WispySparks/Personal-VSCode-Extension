@@ -1,7 +1,7 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs-extra';
-import { Uri } from 'vscode';
 import * as path from 'path';
+import * as vscode from 'vscode';
+import { Uri } from 'vscode';
 
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -42,13 +42,13 @@ export function activate(context: vscode.ExtensionContext) {
 				fs.ensureDirSync(projectBase);
 				fs.ensureDirSync(path.join(projectBase, 'bin'));
 				fs.ensureDirSync(path.join(projectBase, 'lib'));
-				fs.ensureDirSync(path.join(projectBase, 'res'));
 				fs.ensureDirSync(path.join(projectBase, 'src'));
+				fs.ensureDirSync(path.join(projectBase, 'src/main/resources'));
 				fs.copySync(templatePath, projectBase);
-				fs.ensureDirSync(path.join(projectBase, 'src', projectName));
-				fs.copyFileSync(path.join(context.extensionPath, 'templates', 'Main.java'), path.join(projectBase, 'src', projectName, 'Main.java'));
-				let file = fs.readFileSync(path.join(projectBase, 'src', projectName, 'Main.java'));
-				fs.writeFileSync(path.join(projectBase, 'src', projectName, 'Main.java'), ("package " + projectName + ";\n" + file.toString()));
+				fs.ensureDirSync(path.join(projectBase, 'src/main/java', projectName));
+				fs.copyFileSync(path.join(context.extensionPath, 'templates', 'Main.java'), path.join(projectBase, 'src/main/java', projectName, 'Main.java'));
+				let file = fs.readFileSync(path.join(projectBase, 'src/main/java', projectName, 'Main.java'));
+				fs.writeFileSync(path.join(projectBase, 'src/main/java', projectName, 'Main.java'), ("package " + projectName + ";\n" + file.toString()));
 				const openNewWindow: boolean = vscode.workspace.workspaceFolders != undefined;
 				vscode.commands.executeCommand('vscode.openFolder', Uri.file(projectBase), openNewWindow);
 			});
